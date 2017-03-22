@@ -1,0 +1,27 @@
+
+DLL=vbctools
+
+ALL: $(DLL).DLL
+   @echo $@ Done
+
+.rc.res:
+   rc -r $*.rc
+
+.c.obj:
+   cl /nologo /c /W3 /ALu /Ox /GW $**
+
+.cpp.obj:
+   cl /nologo /c /W3 /ALu /Ox /GW $**
+#   cl /nologo /c /W3 /ALu /Od /Zi /GW $**
+
+$(DLL).DLL: $(DLL).OBJ $(DLL).DEF
+   link /nologo /NOD /NOE /PACKC:61440 /ALIGN:16 /ONERROR:NOEXE /MAP @<<
+$(DLL).OBJ
+$(DLL).DLL
+$(DLL).MAP
+oldnames libw ldllcew llibcew
+$(DLL).DEF;
+<<NOKEEP
+   rc /nologo $@
+   implib /nowep $(DLL).LIB $(DLL).DLL
+   @echo $@ Done
